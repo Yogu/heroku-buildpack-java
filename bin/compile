@@ -92,11 +92,14 @@ if [ "true" == $KEEP_M2_CACHE ]; then
   done
 fi
 
-if [ -f ".slugignore" ]; then
+shopt -s globstar
+if [ -f ".slugremove" ]; then
   while read f; do
     echo "-----> Dropping $f from the slug"
     rm -rf $f
-  done < ".slugignore"
+  done < ".slugremove"
 fi
+
+du -h
 
 logger -p user.notice -t "slugc[$$]" "language_pack_java java_compile_end $LOGGER_FLAGS"
