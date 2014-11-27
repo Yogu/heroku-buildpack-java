@@ -92,4 +92,13 @@ if [ "true" == $KEEP_M2_CACHE ]; then
   done
 fi
 
+if [ -f .slugignore ]; then
+  while read f; do
+    for i in `find . -name "$f"`; do
+      echo "-----> Dropping file $i from the slug"
+      rm -rf $i
+    done
+  done < "${BUILD_DIR}"/.slugignore
+fi
+
 logger -p user.notice -t "slugc[$$]" "language_pack_java java_compile_end $LOGGER_FLAGS"
